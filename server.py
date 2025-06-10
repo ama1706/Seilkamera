@@ -76,7 +76,7 @@ def start_script(data):
         return
 
     script_name = data['script_name']
-    process = subprocess.Popen([sys.executable, f"webserver/{script_name}"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    process = subprocess.Popen([sys.executable, f"presets/{script_name}"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output_thread = threading.Thread(target=stream_output, args=(process,))
     output_thread.start()
     script_running = True

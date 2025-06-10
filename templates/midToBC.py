@@ -31,7 +31,32 @@ T4 = 21
 def main():
     gpio_lock = th.Lock()
     setup()
-    mid_to_bc()
+    
+    steps_a = 1024
+    steps_b = 1536
+    steps_c = 1536
+    steps_d = 1024
+
+    time = 15
+    time_a = time / steps_a / 8
+    time_b = time / steps_b / 8
+    time_c = time / steps_c / 8
+    time_d = time / steps_d / 8
+
+    th_motor_a = th.Thread(target=backwardA, args=(steps_a, A1, A2, A3, A4, time_a))
+    th_motor_b = th.Thread(target=forwardB, args=(steps_b, B1,B2, B3, B4, time_b))
+    th_motor_c = th.Thread(target=forwardC, args=(steps_c, C1, C2, C3, C4, time_c))
+    th_motor_d = th.Thread(target=backwardD, args=(steps_d, D1, D2, D3, D4, time_d))
+
+    th_motor_a.start()
+    th_motor_b.start()
+    th_motor_c.start()
+    th_motor_d.start()
+
+    th_motor_a.join()
+    th_motor_b.join()
+    th_motor_c.join()
+    th_motor_d.join()
 
 def setup():
     GPIO.setwarnings(False)
@@ -487,31 +512,5 @@ def forwardD(steps, A, B, C, D, time):
             Step8(A, D, time)
             count = count + 1 
 
-def mid_to_bc():
-    steps_a = 1024
-    steps_b = 1536
-    steps_c = 1536
-    steps_d = 1024
-
-    time = 15
-    time_a = time / steps_a / 8
-    time_b = time / steps_b / 8
-    time_c = time / steps_c / 8
-    time_d = time / steps_d / 8
-
-    th_motor_a = th.Thread(target=backwardA, args=(steps_a, A1, A2, A3, A4, time_a))
-    th_motor_b = th.Thread(target=forwardB, args=(steps_b, B1,B2, B3, B4, time_b))
-    th_motor_c = th.Thread(target=forwardC, args=(steps_c, C1, C2, C3, C4, time_c))
-    th_motor_d = th.Thread(target=backwardD, args=(steps_d, D1, D2, D3, D4, time_d))
-
-    th_motor_a.start()
-    th_motor_b.start()
-    th_motor_c.start()
-    th_motor_d.start()
-
-    th_motor_a.join()
-    th_motor_b.join()
-    th_motor_c.join()
-    th_motor_d.join()
 
 main()
