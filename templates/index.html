@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Python Script</title>
+    <style>
+        body {
+            user-select: none; 
+        }
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            -webkit-user-select: none; /* Verhindert Textauswahl für Webkit-Browser */
+            -moz-user-select: none;    /* Verhindert Textauswahl für Firefox */
+            -ms-user-select: none;     /* Verhindert Textauswahl für Internet Explorer/Edge */
+            user-select: none;         /* Verhindert Textauswahl für alle Browser */
+        }
+
+        .slider-container {
+            text-align: center;
+        }
+
+        .slider {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        #preset {
+            margin-top: 50px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var socket = io();
+            var script_on = false;
+
+            const forwardA = document.getElementById('forwardA');
+            const backwardA = document.getElementById('backwardA');
+
+            const forwardB = document.getElementById('forwardB');
+            const backwardB = document.getElementById('backwardB');
+
+            const forwardC = document.getElementById('forwardC');
+            const backwardC = document.getElementById('backwardC');
+
+            const forwardD = document.getElementById('forwardD');
+            const backwardD = document.getElementById('backwardD');
+
+            const stop = document.getElementById('stop');
+
+            const aToMid = document.getElementById('aToMid');
+            const midToA = document.getElementById('midToA');
+            const midToBC = document.getElementById('midToBC');
+            const bcToMid = document.getElementById('bcToMid');
+            const midToAD = document.getElementById('midToAD')
+
+            const output = document.getElementById('output');
+
+            //forwardA
+            forwardA.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardA.py' });
+                }
+            
+            });
+
+            forwardA.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardA.py' });
+                }
+            });
+
+            forwardA.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            forwardA.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+            //backwardA
+            backwardA.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardA.py' });
+                }
+            
+            });
+
+            backwardA.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardA.py' });
+                }
+            });
+
+            backwardA.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            backwardA.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+            
+
+            socket.on('script_output', (data) => {
+                if (data.output) {
+                    output.innerText += data.output + '\n';
+                }
+                if (data.error) {
+                    output.innerText += 'ERROR: ' + data.error + '\n';
+                }
+            });
+
+
+            //forwardB
+            forwardB.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardB.py' });
+                }
+            
+            });
+
+            forwardB.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardB.py' });
+                }
+            });
+
+            forwardB.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            forwardB.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+            //backwardB
+            backwardB.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardB.py' });
+                }
+            
+            });
+
+            backwardB.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardB.py' });
+                }
+            });
+
+            backwardB.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            backwardB.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+            
+
+            socket.on('script_output', (data) => {
+                if (data.output) {
+                    output.innerText += data.output + '\n';
+                }
+                if (data.error) {
+                    output.innerText += 'ERROR: ' + data.error + '\n';
+                }
+            });
+
+            //forwardC
+            forwardC.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardC.py' });
+                }
+            
+            });
+
+            forwardC.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardC.py' });
+                }
+            });
+
+            forwardC.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            forwardC.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+            //backwardC
+            backwardC.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardC.py' });
+                }
+            
+            });
+
+            backwardC.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardC.py' });
+                }
+            });
+
+            backwardC.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            backwardC.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+            //forwardD
+            forwardD.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardD.py' });
+                }
+            
+            });
+
+            forwardD.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'forwardD.py' });
+                }
+            });
+
+            forwardD.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            forwardD.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+            //backwardD
+            backwardD.addEventListener('mousedown', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardD.py' });
+                }
+            
+            });
+
+            backwardD.addEventListener('touchstart', () => {
+                if (!script_on) {
+                    socket.emit('start_script', { script_name: 'backwardD.py' });
+                }
+            });
+
+            backwardD.addEventListener('mouseup', () => {
+                socket.emit('stop_script');
+            });
+
+            backwardD.addEventListener('touchend', () => {
+                socket.emit('stop_script');
+            });
+
+
+            const slider = document.getElementById("range");
+            const sliderValue = document.getElementById("speed");
+            sliderValue.textContent = slider.value; 
+
+            slider.oninput = function() {
+                sliderValue.textContent = this.value;
+                socket.emit('set_speed', { speed_value:slider.value });
+            }
+
+            aToMid.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'aToMid.py' });
+            });
+
+            midToA.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'midToA.py' });
+            });
+
+            midToBC.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'midToBC.py' });
+            });
+
+            bcToMid.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'bcToMid.py' });
+            });
+
+            midToAD.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'midToAD.py' });
+            });
+
+            stop.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'stop.py' });
+            });
+
+            socket.on('script_output', (data) => {
+                if (data.output) {
+                    output.innerText += data.output + '\n';
+                }
+                if (data.error) {
+                    output.innerText += 'ERROR: ' + data.error + '\n';
+                }
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+    <h2>Motoren Tabelle</h2>
+
+    <table>
+        <tr>
+            <th>Motor</th>
+            <th>Aktionen</th>
+        </tr>
+        <tr>
+            <td>Motor A</td>
+            <td class="buttons">
+                <button id="forwardA">&uarr;</button>
+                <button id="backwardA">&darr;</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Motor B</td>
+            <td class="buttons">
+                <button id="forwardB">&uarr;</button>
+                <button id="backwardB">&darr;</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Motor C</td>
+            <td class="buttons">
+                <button id="forwardC">&uarr;</button>
+                <button id="backwardC">&darr;</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Motor D</td>
+            <td class="buttons">
+                <button id="forwardD">&uarr;</button>
+                <button id="backwardD">&darr;</button>
+            </td>
+        </tr>
+        <tr>
+            <td>NOT AUS</td>
+            <td class="button">
+                <button id="stop">S</button>
+            </td>
+        </tr>
+    </table>
+
+    <table id="preset">
+        <tr>
+            <td>A TO MID</td>
+            <td class="buttons">
+                <button id="aToMid">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>MID TO A</td>
+            <td>
+                <button id="midToA">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>MID TO BC</td>
+            <td>
+                <button id="midToBC">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>BC TO MID</td>
+            <td>
+                <button id="bcToMid">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>MID TO AD</td>
+            <td>
+                <button id="midToAD">GO</button>
+            </td>
+        </tr>
+    </table>
+
+    <div class="slider-container">
+        <input type="range" min="1" max="100" value="50" class="slider" id="range">
+        <p>Speed: <span id="speed"></span></p>
+    </div>
+
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+</body>
+</html>
