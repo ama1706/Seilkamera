@@ -1,6 +1,9 @@
 import sys
 import subprocess
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ModuleNotFoundError:  # pragma: no cover - hardware dependency
+    import fake_gpio as GPIO
 from flask import Flask, render_template, request, jsonify, send_file
 from flask_socketio import SocketIO, emit
 import threading
@@ -13,7 +16,7 @@ process = None
 output_thread = None
 script_running = False
 
-with open('pins.json', 'r') as file:
+with open('Seilkamera\pins.json', 'r') as file:
     data = json.load(file)
 
 A1 = data["A1"]

@@ -1,9 +1,12 @@
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ModuleNotFoundError:  # pragma: no cover - hardware dependency
+    import fake_gpio as GPIO
 from time import sleep
 import json
 
 
-with open('pins.json', 'r') as file:
+with open('Seilkamera\pins.json', 'r') as file:
     data = json.load(file)
 
 A = [data["A1"], data["A2"], data["A3"], data["A4"]]
