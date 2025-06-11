@@ -68,6 +68,26 @@ def stream_output(process):
 def index():
     return render_template('index.html')
 
+@socketio.on('start_motor')
+def start_motor(data):
+    global process, output_thread, script_running
+    if process:
+        process.terminate()
+        process.wait()
+        output_thread.join()
+        process = None
+        emit('script_output', {'error': 'A script is already running.'})
+        return
+    
+    motor_id = data['motor_id']
+    direction = data['direction']
+
+    with open('speed.txt', 'r') as file:
+        time = file.read()
+        time = float(time)
+
+    
+
 @socketio.on('start_script')
 def start_script(data):
     global process, output_thread, script_running

@@ -17,10 +17,10 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            -webkit-user-select: none; /* Verhindert Textauswahl für Webkit-Browser */
-            -moz-user-select: none;    /* Verhindert Textauswahl für Firefox */
-            -ms-user-select: none;     /* Verhindert Textauswahl für Internet Explorer/Edge */
-            user-select: none;         /* Verhindert Textauswahl für alle Browser */
+            -webkit-user-select: none; 
+            -moz-user-select: none;    
+            -ms-user-select: none;     
+            user-select: none;         
         }
 
         .slider-container {
@@ -67,7 +67,7 @@
             //forwardA
             forwardA.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardA.py' });
+                    socket.emit('start_motor', { script_name: 'forwardA.py' });
                 }
             
             });
