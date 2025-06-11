@@ -2,7 +2,7 @@ import sys
 import subprocess
 try:
     import RPi.GPIO as GPIO
-except ModuleNotFoundError:  # pragma: no cover - hardware dependency
+except ModuleNotFoundError: 
     import fake_gpio as GPIO
 from flask import Flask, render_template, request, jsonify, send_file
 from flask_socketio import SocketIO, emit
@@ -136,12 +136,11 @@ def start_script(data):
         return
 
     script_name = data['script_name']
-    preset_path = os.path.join('presets', script_name)
-    if os.path.exists(preset_path):
-        path = preset_path
-    else:
-        path = script_name
-    process = subprocess.Popen([sys.executable, path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    BASE_DIR = Path(__file__).resolve().parent
+    preset_path = os.path.join(BASE_DIR, 'presets')
+    script_path = os.path.join(preset_path, script_name)
+ 
+    process = subprocess.Popen([sys.executable, script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output_thread = threading.Thread(target=stream_output, args=(process,))
     output_thread.start()
     script_running = True

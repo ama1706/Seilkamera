@@ -1,6 +1,6 @@
 try:
     import RPi.GPIO as GPIO
-except ModuleNotFoundError:  # pragma: no cover - hardware dependency
+except ModuleNotFoundError:  
     import fake_gpio as GPIO
 from time import sleep
 import threading as th
