@@ -1,32 +1,32 @@
 import RPi.GPIO as GPIO
 from time import sleep
 import threading as th
+import json
 
 
-A1 = 24
-A2 = 25
-A3 = 4
-A4 = 17
+with open('pins.json', 'r') as file:
+    data = json.load(file)
 
-B1 = 27
-B2 = 22
-B3 = 10
-B4 = 9
+A1 = data["A1"]
+A2 = data["A2"]
+A3 = data["A3"]
+A4 = data["A4"]
 
-C1 = 11
-C2 = 5
-C3 = 6
-C4 = 13
+B1 = data["B1"]
+B2 = data["B2"]
+B3 = data["B3"]
+B4 = data["B4"]
 
-D1 = 19
-D2 = 26
-D3 = 18
-D4 = 23
+C1 = data["C1"]
+C2 = data["C2"]
+C3 = data["C3"]
+C4 = data["C4"]
 
-T1 = 12
-T2 = 16
-T3 = 20
-T4 = 21
+D1 = data["D1"]
+D2 = data["D2"]
+D3 = data["D3"]
+D4 = data["D4"]
+
 
 def main():
     gpio_lock = th.Lock()
@@ -74,8 +74,6 @@ def setup():
     # setup D
     setup_motor(D1, D2, D3, D4)
 
-    # setup T
-    setup_motor(T1, T2, T3, T4)
 
 def setup_motor(*pins):
     for pin in pins:
