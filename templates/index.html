@@ -110,15 +110,6 @@
 
             
 
-            socket.on('script_output', (data) => {
-                if (data.output) {
-                    output.innerText += data.output + '\n';
-                }
-                if (data.error) {
-                    output.innerText += 'ERROR: ' + data.error + '\n';
-                }
-            });
-
 
             //forwardB
             forwardB.addEventListener('mousedown', () => {

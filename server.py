@@ -9,6 +9,7 @@ from flask_socketio import SocketIO, emit
 import threading
 import os
 import json
+import motor_control
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -110,7 +111,6 @@ def start_motor(data):
         time = float(time)
 
     motor_cmd = (
-        "import motor_control; "
         f"motor_control.run_motor('{motor_id}', {time}, '{direction}')"
     )
 
