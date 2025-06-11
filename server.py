@@ -76,7 +76,12 @@ def start_script(data):
         return
 
     script_name = data['script_name']
-    process = subprocess.Popen([sys.executable, f"presets/{script_name}"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    preset_path = os.path.join('presets', script_name)
+    if os.path.exists(preset_path):
+        path = preset_path
+    else:
+        path = script_name
+    process = subprocess.Popen([sys.executable, path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output_thread = threading.Thread(target=stream_output, args=(process,))
     output_thread.start()
     script_running = True
@@ -114,7 +119,7 @@ def stop_script():
 
 @socketio.on('set_speed')
 def set_speed(data):
-    file_path = 'webserver/speed.txt'
+    file_path = 'speed.txt'
 
     try:
 
@@ -147,7 +152,7 @@ def set_speed(data):
 def main():
     
     gpio_lock = threading.Lock()
-    file_path = 'webserver/speed.txt'
+    file_path = 'speed.txt'
     with open(file_path, 'w') as file:
             value = 0.003 - (50 * 0.000024)
             file.write(str(value)) 
