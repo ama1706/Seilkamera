@@ -7,7 +7,7 @@ B = 22
 C = 10
 D = 9
 
-with open('webserver/speed.txt', 'r') as file:
+with open('speed.txt', 'r') as file:
     time = file.read()
     time = float(time)
 
