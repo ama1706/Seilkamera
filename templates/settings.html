@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        body {
+            user-select: none;
+        }
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        table {
+            margin-top: 20px;
+        }
+        td {
+            padding: 5px;
+        }
+        input[type="number"] {
+            width: 60px;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" style="font-size:20px;text-decoration:none;">&larr; Back</a>
+    <h2>Settings</h2>
+    <form id="pinForm">
+        <table>
+            <tr><th>Pin</th><th>Value</th></tr>
+            <tr><td>A1</td><td><input type="number" id="A1" required></td></tr>
+            <tr><td>A2</td><td><input type="number" id="A2" required></td></tr>
+            <tr><td>A3</td><td><input type="number" id="A3" required></td></tr>
+            <tr><td>A4</td><td><input type="number" id="A4" required></td></tr>
+            <tr><td>B1</td><td><input type="number" id="B1" required></td></tr>
+            <tr><td>B2</td><td><input type="number" id="B2" required></td></tr>
+            <tr><td>B3</td><td><input type="number" id="B3" required></td></tr>
+            <tr><td>B4</td><td><input type="number" id="B4" required></td></tr>
+            <tr><td>C1</td><td><input type="number" id="C1" required></td></tr>
+            <tr><td>C2</td><td><input type="number" id="C2" required></td></tr>
+            <tr><td>C3</td><td><input type="number" id="C3" required></td></tr>
+            <tr><td>C4</td><td><input type="number" id="C4" required></td></tr>
+            <tr><td>D1</td><td><input type="number" id="D1" required></td></tr>
+            <tr><td>D2</td><td><input type="number" id="D2" required></td></tr>
+            <tr><td>D3</td><td><input type="number" id="D3" required></td></tr>
+            <tr><td>D4</td><td><input type="number" id="D4" required></td></tr>
+        </table>
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/pins.json')
+            .then(r => r.json())
+            .then(data => {
+                for (const key in data) {
+                    const el = document.getElementById(key);
+                    if (el) el.value = data[key];
+                }
+            });
+
+        document.getElementById('pinForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const payload = {};
+            ['A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4','D1','D2','D3','D4'].forEach(id => {
+                payload[id] = parseInt(document.getElementById(id).value, 10);
+            });
+            fetch('/update_pins', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            }).then(r => r.json())
+              .then(res => {
+                  alert('Pins saved');
+              });
+        });
+    });
+    </script>
+</body>
+</html>

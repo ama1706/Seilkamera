@@ -1,7 +1,7 @@
 import sys
 import subprocess
 import RPi.GPIO as GPIO
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify, send_file
 from flask_socketio import SocketIO, emit
 import threading
 import os
@@ -67,6 +67,26 @@ def stream_output(process):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/pins.json')
+def pins_json():
+    return send_file('pins.json')
+
+@app.route('/settings')
+def settings_page():
+    return render_template('settings.html')
+
+@app.route('/update_pins', methods=['POST'])
+def update_pins_route():
+    data = request.get_json(force=True)
+    with open('pins.json', 'w') as f:
+        json.dump(data, f, indent=2)
+    global A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4, D1, D2, D3, D4
+    A1 = data['A1']; A2 = data['A2']; A3 = data['A3']; A4 = data['A4']
+    B1 = data['B1']; B2 = data['B2']; B3 = data['B3']; B4 = data['B4']
+    C1 = data['C1']; C2 = data['C2']; C3 = data['C3']; C4 = data['C4']
+    D1 = data['D1']; D2 = data['D2']; D3 = data['D3']; D4 = data['D4']
+    return jsonify({'status': 'success'})
 
 @socketio.on('start_motor')
 def start_motor(data):
