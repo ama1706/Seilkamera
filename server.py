@@ -86,6 +86,24 @@ def start_motor(data):
         time = file.read()
         time = float(time)
 
+    motor_cmd = (
+        "import motor_control; "
+        f"motor_control.run_motor('{motor_id}', {time}, '{direction}')"
+    )
+
+    process = subprocess.Popen(
+        [sys.executable, '-c', motor_cmd],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    output_thread = threading.Thread(target=stream_output, args=(process,))
+    output_thread.start()
+    script_running = True
+    emit('script_output', {
+        'output': f'Motor {motor_id} started moving {direction}.'
+    })
+
     
 
 @socketio.on('start_script')

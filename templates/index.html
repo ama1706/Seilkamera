@@ -67,14 +67,14 @@
             //forwardA
             forwardA.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_motor', { script_name: 'forwardA.py' });
+                    socket.emit('start_motor', { motor_id: 'A', direction: 'forward' });
                 }
             
             });
 
             forwardA.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardA.py' });
+                    socket.emit('start_motor', { motor_id: 'A', direction: 'forward' });
                 }
             });
 
@@ -89,14 +89,14 @@
             //backwardA
             backwardA.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardA.py' });
+                    socket.emit('start_motor', { motor_id: 'A', direction: 'backward' });
                 }
             
             });
 
             backwardA.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardA.py' });
+                    socket.emit('start_motor', { motor_id: 'A', direction: 'backward' });
                 }
             });
 
@@ -123,14 +123,14 @@
             //forwardB
             forwardB.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardB.py' });
+                    socket.emit('start_motor', { motor_id: 'B', direction: 'forward' });
                 }
             
             });
 
             forwardB.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardB.py' });
+                    socket.emit('start_motor', { motor_id: 'B', direction: 'forward' });
                 }
             });
 
@@ -145,14 +145,14 @@
             //backwardB
             backwardB.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardB.py' });
+                    socket.emit('start_motor', { motor_id: 'B', direction: 'backward' });
                 }
             
             });
 
             backwardB.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardB.py' });
+                    socket.emit('start_motor', { motor_id: 'B', direction: 'backward' });
                 }
             });
 
@@ -166,26 +166,17 @@
 
             
 
-            socket.on('script_output', (data) => {
-                if (data.output) {
-                    output.innerText += data.output + '\n';
-                }
-                if (data.error) {
-                    output.innerText += 'ERROR: ' + data.error + '\n';
-                }
-            });
-
             //forwardC
             forwardC.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardC.py' });
+                    socket.emit('start_motor', { motor_id: 'C', direction: 'forward' });
                 }
             
             });
 
             forwardC.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardC.py' });
+                    socket.emit('start_motor', { motor_id: 'C', direction: 'forward' });
                 }
             });
 
@@ -200,14 +191,14 @@
             //backwardC
             backwardC.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardC.py' });
+                    socket.emit('start_motor', { motor_id: 'C', direction: 'backward' });
                 }
             
             });
 
             backwardC.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardC.py' });
+                    socket.emit('start_motor', { motor_id: 'C', direction: 'backward' });
                 }
             });
 
@@ -222,14 +213,14 @@
             //forwardD
             forwardD.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardD.py' });
+                    socket.emit('start_motor', { motor_id: 'D', direction: 'forward' });
                 }
             
             });
 
             forwardD.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'forwardD.py' });
+                    socket.emit('start_motor', { motor_id: 'D', direction: 'forward' });
                 }
             });
 
@@ -244,14 +235,14 @@
             //backwardD
             backwardD.addEventListener('mousedown', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardD.py' });
+                    socket.emit('start_motor', { motor_id: 'D', direction: 'backward' });
                 }
             
             });
 
             backwardD.addEventListener('touchstart', () => {
                 if (!script_on) {
-                    socket.emit('start_script', { script_name: 'backwardD.py' });
+                    socket.emit('start_motor', { motor_id: 'D', direction: 'backward' });
                 }
             });
 
