@@ -4,9 +4,11 @@ except ModuleNotFoundError:  # pragma: no cover - hardware dependency
     import fake_gpio as GPIO
 from time import sleep
 import json
+from pathlib import Path
 
 
-with open('Seilkamera\pins.json', 'r') as file:
+BASE_DIR = Path(__file__).resolve().parent
+with open(BASE_DIR / 'pins.json', 'r') as file:
     data = json.load(file)
 
 A = [data["A1"], data["A2"], data["A3"], data["A4"]]
@@ -46,15 +48,17 @@ def step(pins, pattern, delay):
         GPIO.output(pins[i], i in pattern)
     sleep(delay)
 
-def run_motor(motor_id, delay, direction):
+def run_motor(motor_id, delay, direction, stop_event=None):
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     pins = MOTORS[motor_id]
     setup_motor(pins)
     sequence = FORWARD_SEQUENCE if direction == "forward" else BACKWARD_SEQUENCE
     try:
-        while True:
+        while not (stop_event and stop_event.is_set()):
             for pattern in sequence:
+                if stop_event and stop_event.is_set():
+                    break
                 step(pins, pattern, delay)
     finally:
         GPIO.cleanup()

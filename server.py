@@ -10,14 +10,18 @@ import threading
 import os
 import json
 import motor_control
+from pathlib import Path
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 process = None
 output_thread = None
+motor_thread = None
+motor_stop_event = None
 script_running = False
 
-with open('Seilkamera\pins.json', 'r') as file:
+BASE_DIR = Path(__file__).resolve().parent
+with open(BASE_DIR / 'pins.json', 'r') as file:
     data = json.load(file)
 
 A1 = data["A1"]
@@ -43,7 +47,7 @@ D4 = data["D4"]
 
 def setup():
     GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)  # Set pin numbering mode
+    GPIO.setmode(GPIO.BCM)  
 
     # setup A
     setup_motor(A1, A2, A3, A4)
@@ -94,12 +98,8 @@ def update_pins_route():
 
 @socketio.on('start_motor')
 def start_motor(data):
-    global process, output_thread, script_running
-    if process:
-        process.terminate()
-        process.wait()
-        output_thread.join()
-        process = None
+    global motor_thread, motor_stop_event, script_running
+    if motor_thread and motor_thread.is_alive():
         emit('script_output', {'error': 'A script is already running.'})
         return
     
@@ -110,19 +110,13 @@ def start_motor(data):
         time = file.read()
         time = float(time)
 
-    motor_cmd = (
-        "import motor_control; "
-        f"motor_control.run_motor('{motor_id}', {time}, '{direction}')"
+    motor_stop_event = threading.Event()
+    motor_thread = threading.Thread(
+        target=motor_control.run_motor,
+        args=(motor_id, time, direction, motor_stop_event)
     )
 
-    process = subprocess.Popen(
-        [sys.executable, '-c', motor_cmd],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
-    output_thread = threading.Thread(target=stream_output, args=(process,))
-    output_thread.start()
+    motor_thread.start()
     script_running = True
     emit('script_output', {
         'output': f'Motor {motor_id} started moving {direction}.'
@@ -155,7 +149,7 @@ def start_script(data):
 
 @socketio.on('stop_script')
 def stop_script():
-    global process, output_thread
+    global process, output_thread, motor_thread, motor_stop_event
     if process:
         process.terminate()
         process.wait()
@@ -163,6 +157,13 @@ def stop_script():
         emit('script_output', {'output': 'Script terminated.'})
         
         process = None
+    elif motor_thread:
+        motor_stop_event.set()
+        motor_thread.join()
+        emit('script_output', {'output': 'Motor stopped.'})
+
+        motor_thread = None
+        motor_stop_event = None
         GPIO.output(A1, False)
         GPIO.output(A2, False)
         GPIO.output(A3, False)

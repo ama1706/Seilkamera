@@ -5,9 +5,11 @@ except ModuleNotFoundError:  # pragma: no cover - hardware dependency
 from time import sleep
 import threading as th
 import json
+from pathlib import Path
 
 
-with open('Seilkamera\pins.json', 'r') as file:
+BASE_DIR = Path(__file__).resolve().parent
+with open(BASE_DIR / 'pins.json', 'r') as file:
     data = json.load(file)
 
 A1 = data["A1"]
