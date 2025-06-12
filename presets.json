@@ -1,0 +1,86 @@
+{
+    "aToMid": {
+      "A": {"direction": "backward", "steps": 1280},
+      "B": {"direction": "forward", "steps": 1664},
+      "C": {"direction": "forward", "steps": 1408},
+      "D": {"direction": "forward", "steps": 256},
+      "time": 15
+    },
+    "midToA": {
+      "A": {"direction": "forward", "steps": 1408},
+      "B": {"direction": "backward", "steps": 896},
+      "C": {"direction": "backward", "steps": 1408},
+      "D": {"direction": "backward", "steps": 256},
+      "time": 15
+    },
+    "midToBC": {
+      "A": {"direction": "backward", "steps": 1024},
+      "B": {"direction": "forward", "steps": 1536},
+      "C": {"direction": "forward", "steps": 1536},
+      "D": {"direction": "backward", "steps": 1024},
+      "time": 15
+    },
+    "bcToMid": {
+      "A": {"direction": "forward", "steps": 1280},
+      "B": {"direction": "backward", "steps": 768},
+      "C": {"direction": "backward", "steps": 768},
+      "D": {"direction": "forward", "steps": 1280},
+      "time": 15
+    },
+    "midToAD": {
+      "A": {"direction": "forward", "steps": 1024},
+      "B": {"direction": "backward", "steps": 1024},
+      "C": {"direction": "backward", "steps": 1024},
+      "D": {"direction": "forward", "steps": 1536},
+      "time": 15
+    },
+    "adToMid": {
+      "A": {"direction": "backward", "steps": 1024},
+      "B": {"direction": "forward", "steps": 1024},
+      "C": {"direction": "forward", "steps": 1024},
+      "D": {"direction": "backward", "steps": 1536},
+      "time": 15
+    },
+    "bToMid": {
+      "A": {"direction": "forward", "steps": 0},
+      "B": {"direction": "backward", "steps": 0},
+      "C": {"direction": "forward", "steps": 0},
+      "D": {"direction": "forward", "steps": 0},
+      "time": 15
+    },
+    "midToB": {
+      "A": {"direction": "backward", "steps": 0},
+      "B": {"direction": "forward", "steps": 0},
+      "C": {"direction": "forward", "steps": 0},
+      "D": {"direction": "backward", "steps": 0},
+      "time": 15
+    },
+    "cToMid": {
+      "A": {"direction": "forward", "steps": 0},
+      "B": {"direction": "backward", "steps": 0},
+      "C": {"direction": "backward", "steps": 0},
+      "D": {"direction": "forward", "steps": 0},
+      "time": 15
+    },
+    "midToC": {
+      "A": {"direction": "backward", "steps": 0},
+      "B": {"direction": "forward", "steps": 0},
+      "C": {"direction": "forward", "steps": 0},
+      "D": {"direction": "backward", "steps": 0},
+      "time": 15
+    },
+    "dToMid": {
+      "A": {"direction": "forward", "steps": 0},
+      "B": {"direction": "forward", "steps": 0},
+      "C": {"direction": "forward", "steps": 0},
+      "D": {"direction": "backward", "steps": 0},
+      "time": 15
+    },
+    "midToD": {
+      "A": {"direction": "backward", "steps": 0},
+      "B": {"direction": "backward", "steps": 0},
+      "C": {"direction": "backward", "steps": 0},
+      "D": {"direction": "forward", "steps": 0},
+      "time": 15
+    }
+  }

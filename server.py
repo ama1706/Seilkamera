@@ -72,6 +72,10 @@ def stream_output(process):
     for line in process.stderr:
         socketio.emit('script_output', {'error': line.strip()})
 
+def set_running_script(value):
+    global script_running
+    script_running = value
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -80,9 +84,21 @@ def index():
 def pins_json():
     return send_file('pins.json')
 
+@app.route('/presets.json')
+def presets_json():
+    return send_file('presets.json')
+
 @app.route('/settings')
 def settings_page():
     return render_template('settings.html')
+
+@app.route('/update_presets', methods=['POST'])
+def update_presets_route():
+    data = request.get_json(force=True)
+    with open('presets.json', 'w') as f:
+        json.dump(data, f, indent=2)
+    return jsonify({'status': 'success'})
+
 
 @app.route('/update_pins', methods=['POST'])
 def update_pins_route():
@@ -143,7 +159,7 @@ def start_script(data):
     process = subprocess.Popen([sys.executable, script_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output_thread = threading.Thread(target=stream_output, args=(process,))
     output_thread.start()
-    script_running = True
+    #script_running = True
     emit('script_output', {'output': 'Script started...'})
 
 @socketio.on('stop_script')
@@ -163,25 +179,7 @@ def stop_script():
 
         motor_thread = None
         motor_stop_event = None
-        GPIO.output(A1, False)
-        GPIO.output(A2, False)
-        GPIO.output(A3, False)
-        GPIO.output(A4, False)
-
-        GPIO.output(B1, False)
-        GPIO.output(B2, False)
-        GPIO.output(B3, False)
-        GPIO.output(B4, False)
-
-        GPIO.output(C1, False)
-        GPIO.output(C2, False)
-        GPIO.output(C3, False)
-        GPIO.output(C4, False)
-
-        GPIO.output(D1, False)
-        GPIO.output(D2, False)
-        GPIO.output(D3, False)
-        GPIO.output(D4, False)
+        
 
 @socketio.on('set_speed')
 def set_speed(data):

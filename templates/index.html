@@ -61,6 +61,13 @@
             const midToBC = document.getElementById('midToBC');
             const bcToMid = document.getElementById('bcToMid');
             const midToAD = document.getElementById('midToAD');
+            const adToMid = document.getElementById('adToMid');
+            const bToMid = document.getElementById('bToMid');
+            const midToB = document.getElementById('midToB');
+            const cToMid = document.getElementById('cToMid');
+            const midToC = document.getElementById('midToC');
+            const dToMid = document.getElementById('dToMid');
+            const midToD = document.getElementById('midToD');
 
             const output = document.getElementById('output');
 
@@ -275,6 +282,35 @@
                 socket.emit('start_script', { script_name: 'midToAD.py' });
             });
 
+            adToMid.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'adToMid.py' });
+            });
+
+            bToMid.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'bToMid.py' });
+            });
+
+            midToB.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'midToB.py' });
+            });
+
+            cToMid.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'cToMid.py' });
+            });
+
+            midToC.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'midToC.py' });
+            });
+
+            dToMid.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'dToMid.py' });
+            });
+
+            midToD.addEventListener('click', () => {
+                socket.emit('start_script', { script_name: 'midToD.py' });
+            });
+
+
             stop.addEventListener('click', () => {
                 socket.emit('start_script', { script_name: 'stop.py' });
             });
@@ -366,6 +402,48 @@
             <td>MID TO AD</td>
             <td>
                 <button id="midToAD">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>AD TO MID</td>
+            <td>
+                <button id="adToMid">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>B TO MID</td>
+            <td>
+                <button id="bToMid">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>MID TO B</td>
+            <td>
+                <button id="midToB">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>C TO MID</td>
+            <td>
+                <button id="cToMid">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>MID TO C</td>
+            <td>
+                <button id="midToC">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>D TO MID</td>
+            <td>
+                <button id="dToMid">GO</button>
+            </td>
+        </tr>
+        <tr>
+            <td>MID TO D</td>
+            <td>
+                <button id="midToD">GO</button>
             </td>
         </tr>
     </table>
